@@ -83,8 +83,13 @@ class ExecutionEvents(object):
 
 class CosmoManagerRestClient(object):
 
-    def __init__(self, server_ip, port=8100):
-        server_url = 'http://{0}:{1}'.format(server_ip, port)
+    def __init__(self, server_ip_or_url, port=8100):
+        if '://' in server_ip_or_url:
+            # New form. Please modify your code to use this variant.
+            server_url = server_ip_or_url
+        else:
+            # Old form. Please do not use.
+            server_url = 'http://{0}:{1}'.format(server_ip_or_url, port)
         api_client = ApiClient(apiServer=server_url, apiKey='')
         self._blueprints_api = BlueprintsApi(api_client)
         self._executions_api = ExecutionsApi(api_client)
